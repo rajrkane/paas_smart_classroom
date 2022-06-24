@@ -34,7 +34,7 @@ class S3:
 		list_obj = self.client.list_objects_v2(Bucket=self.output_bucket)
 		try:
 			for item in list_obj["Contents"]:
-				self.cleint.delete_object(Bucket=self.output_bucket, Key=item["Key"])
+				self.client.delete_object(Bucket=self.output_bucket, Key=item["Key"])
 		except:
 			print("Nothing to clear in output bucket.")
 

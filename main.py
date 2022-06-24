@@ -1,6 +1,12 @@
 from src.s3 import S3
+from src.ddb import DDB
 
 def main():
+
+	ddb = DDB()
+	print("Loading data into DynamoDB.")
+	ddb.load_data("student_data.json")
+
 	s3 = S3()
 	s3.clear_input_bucket()
 	s3.clear_output_bucket()
