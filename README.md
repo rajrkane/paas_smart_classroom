@@ -1,5 +1,21 @@
 cc project: the re-up
 
+## DynamoDB
+
+The `json` data is already loaded into the table `student_data` for clouderson. We don't need to handle preloading here.
+
+## .env
+
+The `.env` should look like this, with no quotation marks.
+
+```
+AWS_ACCESS_KEY=<access key>
+AWS_SECRET_KEY=<secret key>
+S3_INPUT=<input bucket name>
+S3_OUTPUT=<output bucket name>
+DYNAMO_DB=<db name>
+```
+
 ## Docker
 
 Run following commands to use docker as non-root user.
@@ -13,18 +29,16 @@ $ docker run hello-world
 
 If `hello-world` didn't work, might need to `reboot`.
 
-Build docker image (might be stuck for some time on `setup.py` stage). Rebuild necessary on change.
+Build docker image (might be stuck for some time on `setup.py` stage). Then run it.
 
-```docker build -t <tag> ./```
+```docker build -t <tag> ./ && docker run --env-file .env -p 8080:8080 <tag>:latest```
 
-Check images and verify it's there.
+Rebuild is necessary on update.
 
-```docker images```
-
-Run the image.
-
-```docker run -p 8080:8080 <tag>:latest```
+## Handler
 
 From another shell, send a POST to have the lambda function run.
 
-```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d "{}"```
+```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"key":"test_0.mp4"}'```
+
+For now, this command will fetch one specified video from the input bucket.

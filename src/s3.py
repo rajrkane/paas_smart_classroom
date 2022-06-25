@@ -11,12 +11,11 @@ class S3:
 		
 		self.input_bucket = getenv("S3_INPUT")
 		self.output_bucket = getenv("S3_OUTPUT") 
-		self.region = getenv("REGION")
 		self.access_key = getenv("AWS_ACCESS_KEY")
 		self.secret_key = getenv("AWS_SECRET_KEY")
 		self.client = boto3_client(
 			"s3",
-			region_name=self.region,
+			region_name="us-east-1",
 			aws_access_key_id=self.access_key,
 			aws_secret_access_key=self.secret_key
 		)

@@ -1,7 +1,8 @@
 from src.s3 import S3
 from src.ddb import DDB
 import pickle
-
+from os import getenv, listdir
+from dotenv import load_dotenv
 
 def open_encoding(filename):
 	f = open(filename, "rb")
@@ -9,17 +10,40 @@ def open_encoding(filename):
 	f.close()
 	return data
 
-# Lambda function for performing face recognition
-# Create this using docker image
+def build_model():
+	pass
+
+# TODO: listen to bucket event
 def face_recognition_handler(event, context):
-	print("Hello world")
+	print("Event:")
+	print(event)
+	print("Context:")
+	print(context)
+	print("-----------")
+
+	# parse event
+	image_name = event['key']
+
+	# get object from input bucket
+	s3 = S3()
+	print(s3.input_bucket)
+
+	try:
+		response = s3.client.get_object(Bucket=s3.input_bucket, Key=image_name)
+		print(response)
+	except Exception as e:
+		print(e) 
+
+	# extract frame from video
+
+	# determine which face matches extracted image
+
+	# get matching record from dynamodb
+
+	# handle result
 
 
 # def main():
-	#print(open_encoding("encoding"))
-	# ddb = DDB()
-	# print("Loading data into DynamoDB.")
-	# ddb.load_data("student_data.json")
 
 	# s3 = S3()
 	# s3.clear_input_bucket()
