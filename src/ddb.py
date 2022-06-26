@@ -1,4 +1,4 @@
-"""ddb.py: Defines DDB module for preloading data into DynamoDB."""
+"""ddb.py: Defines DDB module for interacting with DynamoDB table."""
 
 from boto3 import resource as boto3_resource
 from os import getenv, listdir
@@ -16,8 +16,9 @@ class DDB:
 			aws_access_key_id=self.access_key,
 			aws_secret_access_key=self.secret_key
 		)
-		self.table = self.resource.Table(getenv("DYNAMO_DB"))
+		self.table = self.resource.Table("student_data")
 
+	# Function only needs to be called one time when preloading data
 	def load_data(self, filename):
 		f = open(filename)
 		request_items = json.loads(f.read())

@@ -11,9 +11,6 @@ The `.env` should look like this, with no quotation marks.
 ```
 AWS_ACCESS_KEY=<access key>
 AWS_SECRET_KEY=<secret key>
-S3_INPUT=<input bucket name>
-S3_OUTPUT=<output bucket name>
-DYNAMO_DB=<db name>
 ```
 
 ## Docker

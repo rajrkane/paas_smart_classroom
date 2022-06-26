@@ -1,7 +1,7 @@
 from src.s3 import S3
 from src.ddb import DDB
 import pickle
-from os import getenv, listdir
+from os import getenv, listdir, path, mkdir
 from dotenv import load_dotenv
 
 def open_encoding(filename):
@@ -21,26 +21,44 @@ def face_recognition_handler(event, context):
 	print(context)
 	print("-----------")
 
-	# parse event
-	image_name = event['key']
+	# Parse event
+	mp4_name = event['key']
 
-	# get object from input bucket
+	# Get object from input bucket
 	s3 = S3()
-	print(s3.input_bucket)
-
 	try:
-		response = s3.client.get_object(Bucket=s3.input_bucket, Key=image_name)
-		print(response)
+		obj = s3.client.get_object(Bucket=s3.input_bucket, Key=mp4_name)
+		print("Got response.\n", obj)
 	except Exception as e:
-		print(e) 
+		print(f"Could not get object {key} from bucket {s3.input_bucket}.") 
+		raise e 
 
-	# extract frame from video
+	# Download the object as a file
+	file_dir = "/tmp/input/"
+	if path.isdir(file_dir) is False:
+		mkdir(file_dir)
 
-	# determine which face matches extracted image
+	file_path = file_dir + mp4_name
+	
+	try:
+		s3.client.download_file(
+			Bucket=s3.input_bucket,
+			Key=mp4_name,
+			Filename=file_path
+		)
+		print(f"Downloaded object to {file_path}.")
+	except Exception as e:
+		print(f"Could not download to {file_path}.")
+		print(e)
+		raise e
 
-	# get matching record from dynamodb
+	# Extract frame from video
 
-	# handle result
+	# Determine which face matches extracted image
+
+	# Get matching record from dynamodb
+
+	# Handle result
 
 
 # def main():

@@ -9,8 +9,8 @@ class S3:
 	def __init__(self):
 		load_dotenv()
 		
-		self.input_bucket = getenv("S3_INPUT")
-		self.output_bucket = getenv("S3_OUTPUT") 
+		self.input_bucket = "clouderson546-input"
+		self.output_bucket = "clouderson546-output" 
 		self.access_key = getenv("AWS_ACCESS_KEY")
 		self.secret_key = getenv("AWS_SECRET_KEY")
 		self.client = boto3_client(
