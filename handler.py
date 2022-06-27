@@ -1,60 +1,66 @@
 from src.s3 import S3
 from src.ddb import DDB
 import pickle
-from os import getenv, listdir, path, mkdir
-from dotenv import load_dotenv
+import face_recognition 
+from os import system, listdir
 
 def open_encoding(filename):
-	f = open(filename, "rb")
-	data = pickle.load(f)
-	f.close()
-	return data
+	try:
+		f = open(filename, "rb")
+		data = pickle.load(f)
+		f.close()
+		return data
+	except IOError:
+		print(f"Encoding file {filename} does not exist.")
 
 def build_model():
 	pass
 
 # TODO: listen to bucket event
 def face_recognition_handler(event, context):
-	print("Event:")
-	print(event)
-	print("Context:")
-	print(context)
-	print("-----------")
+	# print("Event:")
+	# print(event)
+	# print("Context:")
+	# print(context)
+	# print("-----------")
 
 	# Parse event
-	mp4_name = event['key']
+	video_file_name = event['key']
 
 	# Get object from input bucket
 	s3 = S3()
 	try:
-		obj = s3.client.get_object(Bucket=s3.input_bucket, Key=mp4_name)
-		print("Got response.\n", obj)
+		obj = s3.client.get_object(Bucket=s3.input_bucket, Key=video_file_name)
+		# print("Got response.\n", obj)
 	except Exception as e:
 		print(f"Could not get object {key} from bucket {s3.input_bucket}.") 
 		raise e 
 
 	# Download the object as a file
-	file_dir = "/tmp/input/"
-	if path.isdir(file_dir) is False:
-		mkdir(file_dir)
-
-	file_path = file_dir + mp4_name
+	path = "/tmp/"
+	video_file_path = path + video_file_name
 	
 	try:
 		s3.client.download_file(
 			Bucket=s3.input_bucket,
-			Key=mp4_name,
-			Filename=file_path
+			Key=video_file_name,
+			Filename=video_file_path
 		)
-		print(f"Downloaded object to {file_path}.")
+		print(f"Downloaded object to {video_file_path}.")
 	except Exception as e:
-		print(f"Could not download to {file_path}.")
+		print(f"Could not download to {video_file_path}.")
 		print(e)
 		raise e
 
-	# Extract frame from video
+	# Extract frame from video (starting at 001)
+	system("ffmpeg -i " + str(video_file_path) + " -r 1 " + str(path) + "image-%3d.jpeg -loglevel quiet")
+
+	# Get face from first image
+	image = face_recognition.load_image_file(str(path) + "image-001.jpeg")
+	face_locations = face_recognition.face_locations(image)
 
 	# Determine which face matches extracted image
+	encoding_file = open_encoding("/home/app/encoding")
 
 	# Get matching record from dynamodb
 
