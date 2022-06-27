@@ -9,8 +9,8 @@ dateValue=`date -R`
 signature_string="PUT\n\n${contentType}\n${dateValue}\n${filepath}"
 
 #s3 keys
-s3_access_key="AKIAYZP6CNNO2SKANCDJ"
-s3_secret_key="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"
+s3_access_key=""
+s3_secret_key=""
 
 #prepare signature hash to be sent in Authorization header
 signature_hash=`echo -en ${signature_string} | openssl sha1 -hmac ${s3_secret_key} -binary | base64`
