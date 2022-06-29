@@ -19,6 +19,7 @@ def face_recognition_handler(event, context):
 	# Parse event
 	video_file_name = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
 
+'''
 	# Get object from input bucket
 	s3 = S3()
 	try:
@@ -26,11 +27,13 @@ def face_recognition_handler(event, context):
 	except Exception as e:
 		print(f"Could not get object {key} from bucket {s3.input_bucket}.") 
 		raise e 
-
+'''
 	# Download the object as a file
 	path = "/tmp/"
 	video_file_path = path + video_file_name
-	
+
+	print("hello")
+
 	try:
 		s3.client.download_file(
 			Bucket=s3.input_bucket,
@@ -48,7 +51,9 @@ def face_recognition_handler(event, context):
 	# Get face from first image
 	image = face_recognition.load_image_file(str(path) + "image-001.jpeg")
 	unknown_encoding = face_recognition.face_encodings(image)[0]
-
+	print("Made it here")
+	return None
+'''
 	# Determine which face matches extracted image
 	encodings = open_encoding("/home/app/encoding")
 	for e in enumerate(encodings["encoding"]):
@@ -75,7 +80,7 @@ def face_recognition_handler(event, context):
 		f.write(save_body.encode())
 		f.seek(0)
 		s3.client.upload_fileobj(f, s3.output_bucket, save_name)
-
+'''
 # def main():
 	# ddb = DDB()
 	# ddb.load_data("student_data.json")
