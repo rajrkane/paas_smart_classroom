@@ -7,6 +7,8 @@ The `json` data is already loaded into the table `student_data` for clouderson. 
 The `.env` should look like this, with no quotation marks.
 
 ```
+INPUT_BUCKET=<input bucket name>
+OUTPUT_BUCKET=<output bucket name>
 AWS_ACCESS_KEY=<access key>
 AWS_SECRET_KEY=<secret key>
 ```
