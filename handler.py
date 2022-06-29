@@ -1,7 +1,8 @@
 from src.s3 import S3
 from src.ddb import DDB
 import pickle
-import face_recognition 
+import face_recognition
+import urllib
 from os import system, listdir
 
 def open_encoding(filename):
@@ -25,7 +26,7 @@ def face_recognition_handler(event, context):
 	# print("-----------")
 
 	# Parse event
-	video_file_name = event['key']
+	video_file_name = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
 
 	# Get object from input bucket
 	s3 = S3()
