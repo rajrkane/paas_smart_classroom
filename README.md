@@ -1,5 +1,3 @@
-cc project: the re-up
-
 ## DynamoDB
 
 The `json` data is already loaded into the table `student_data` for clouderson. We don't need to handle preloading here.
@@ -38,4 +36,10 @@ From another shell, send a POST to have the handler run.
 
 ```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
 
-For now, this command will fetch one specified video from the input bucket.
+Check for the corresponding `test_0.txt` file in the output bucket with corresponding text as:
+
+```
+president_trump
+physics
+junior
+```
