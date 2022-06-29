@@ -40,6 +40,9 @@ class S3:
 	def upload_to_input_bucket(self, path, name):
 		self.client.upload_file(path + name, self.input_bucket, name)
 
+	def upload_to_output_bucket(self, path, name):
+		self.client.upload_file(path + name, self.output_bucket, name)
+
 	def upload_files(self, test_dir):
 		# test_dir is test_case_1 or test_case_2
 		test_path = "tests/" + test_dir + "/"

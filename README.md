@@ -1,5 +1,3 @@
-cc project: the re-up
-
 ## DynamoDB
 
 The `json` data is already loaded into the table `student_data` for clouderson. We don't need to handle preloading here.
@@ -36,10 +34,12 @@ Rebuild is necessary on update.
 
 From another shell, send a POST to have the handler run.
 
-```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"key":"test_0.mp4"}'```
+```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
 
-For now, this command will fetch one specified video from the input bucket.
+Check for the corresponding `test_0.txt` file in the output bucket with corresponding text as:
 
-### Listening
-
-The `curl` command above sends to a local port, whereas the `upload.sh` script uploads to the input bucket. Ultimately, we need the handler to listen for an upload at the input bucket. How do we connect these two request approaches to be able to do that? Is it something to do with `docker run`?
+```
+president_trump
+physics
+junior
+```

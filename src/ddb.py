@@ -13,6 +13,7 @@ class DDB:
 		self.secret_key = getenv("AWS_SECRET_KEY")
 		self.resource = boto3_resource(
 			"dynamodb",
+			region_name="us-east-1",
 			aws_access_key_id=self.access_key,
 			aws_secret_access_key=self.secret_key
 		)
