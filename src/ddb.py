@@ -26,3 +26,10 @@ class DDB:
 		with self.table.batch_writer() as batch:
 			for item in request_items:
 				batch.put_item(Item=item)
+
+def main():
+	ddb = DDB()
+	ddb.load_data("student_data.json")
+
+if __name__=="__main__":
+	main()
