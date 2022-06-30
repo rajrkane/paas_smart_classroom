@@ -38,10 +38,6 @@ From another shell, send a POST to have the handler run.
 
 ```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
 
-Check for the corresponding `test_0` CSV file in the output bucket with rows:
+Check for the corresponding `test_0` CSV file in the output bucket with body:
 
-```
-president_trump
-physics
-junior
-```
+`president_trump, physics, junior`
