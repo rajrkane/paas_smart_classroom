@@ -1,6 +1,6 @@
-# Group + Tasks
+## Group + Tasks
 
-### 1. **Raj Kane**:
+### Raj Kane
 
   * Developed code to upload and download files from S3 input and output buckets.
   
@@ -17,7 +17,7 @@
   * Wrote README documentation. 
 
 
-### 2. **Trey Manuszak**:
+### Trey Manuszak
 
   * Setup of the S3 input and output buckets.
   
@@ -32,13 +32,9 @@
   * Performed production level testing and evaluation of Lambda function configuration.
 
 
-## DynamoDB
+## Testing 
 
-The `json` data is already loaded into the table `student_data` for clouderson. We don't need to handle preloading here.
-
-## .env
-
-The `.env` should look like this, with no quotation marks.
+The `.env` file should have the following form, with no quotation marks.
 
 ```
 INPUT_BUCKET=<input bucket name>
@@ -47,37 +43,20 @@ AWS_ACCESS_KEY=<access key>
 AWS_SECRET_KEY=<secret key>
 ```
 
-## Asset Names
+If not already done, preload the `student_data.json` data into DynamoDB.
 
-S3 Input Bucket: `cse546-paas-input`
+```$ python src/ddb.py```
 
-S3 Output Bucket: `cse546-paas-output`
+### Production testing
 
-## Docker
+*TODO*
 
-Run following commands to use docker as non-root user.
+### Local testing
 
-```
-$ sudo groupadd docker
-$ sudo usermod -aG docker $USER
-$ newgrp docker
-$ docker run hello-world
-```
+Build and run the docker image.
 
-If `hello-world` didn't work, might need to `reboot`.
+```$ docker build -t <tag> ./ && docker run --env-file .env -p 8080:8080 <tag>:latest```
 
-Build docker image (might be stuck for some time on `setup.py` stage). Then run it.
+From another shell, send a POST have the handler run.
 
-```docker build -t <tag> ./ && docker run --env-file .env -p 8080:8080 <tag>:latest```
-
-Rebuild is necessary on update.
-
-## Handler
-
-From another shell, send a POST to have the handler run.
-
-```curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
-
-Check for the corresponding `test_0` CSV file in the output bucket with body:
-
-`president_trump, physics, junior`
+```$ curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
