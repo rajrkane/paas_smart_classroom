@@ -1,3 +1,13 @@
+# Group + Tasks
+
+### 1. **Raj Kane**:
+
+  * Task
+
+### 2. **Trey Manuszak**:
+
+  * Task
+
 ## DynamoDB
 
 The `json` data is already loaded into the table `student_data` for clouderson. We don't need to handle preloading here.
@@ -12,6 +22,12 @@ OUTPUT_BUCKET=<output bucket name>
 AWS_ACCESS_KEY=<access key>
 AWS_SECRET_KEY=<secret key>
 ```
+
+## Asset Names
+
+S3 Input Bucket: `cse546-paas-input`
+
+S3 Output Bucket: `cse546-paas-output`
 
 ## Docker
 
