@@ -54,7 +54,22 @@ If not already done, preload the `student_data.json` data into DynamoDB.
 
 ### Production testing
 
-*TODO*
+To test the program in production, you must push the folder containing the Dockerfile to the Elastic Container Registry. To do that, run the following commands:
+
+```aws ecr get-login-password --region <region>| docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com```
+
+```docker build -t <ecr registry name> .```
+
+```docker tag <ecr registry name>:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest```
+
+```docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest```
+
+After updating the Lambda image with the latest ECR container from the commands above, go to your local terminal and run the following command:
+
+```python3 workload.py```
+
+Verification of the correctness can be done by cross-verifying the CloudWatch logs with the provided mapping.
+
 
 ### Local testing
 
