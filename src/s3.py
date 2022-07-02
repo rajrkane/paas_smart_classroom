@@ -1,4 +1,4 @@
-"""s3.py: Defines S3 module for uploading input videos and receiving labels."""
+"""s3.py: Defines S3 module."""
 
 from boto3 import client as boto3_client
 from os import getenv, listdir
