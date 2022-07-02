@@ -31,6 +31,11 @@
   
   * Performed production level testing and evaluation of Lambda function configuration.
 
+## Assets
+
+S3 Input Bucket: cse546-paas-input
+
+S3 Output Bucket: cse546-paas-output
 
 ## Testing 
 
