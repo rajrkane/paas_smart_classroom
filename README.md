@@ -33,9 +33,9 @@
 
 ## Assets
 
-S3 Input Bucket: cse546-paas-input
+S3 Input Bucket: `cse546-paas-input`
 
-S3 Output Bucket: cse546-paas-output
+S3 Output Bucket: `cse546-paas-output`
 
 ## Testing 
 
@@ -56,20 +56,18 @@ If not already done, preload the `student_data.json` data into DynamoDB.
 
 To test the program in production, you must push the folder containing the Dockerfile to the Elastic Container Registry. To do that, run the following commands:
 
-```aws ecr get-login-password --region <region>| docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com```
-
-```docker build -t <ecr registry name> .```
-
-```docker tag <ecr registry name>:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest```
-
-```docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest```
+```
+$ aws ecr get-login-password --region <region>| docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+$ docker build -t <ecr registry name> .
+$ docker tag <ecr registry name>:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest
+$ docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/<ecr registry name>:latest
+```
 
 After updating the Lambda image with the latest ECR container from the commands above, go to your local terminal and run the following command:
 
-```python3 workload.py```
+```$ python3 workload.py```
 
 Verification of the correctness can be done by cross-verifying the CloudWatch logs with the provided mapping.
-
 
 ### Local testing
 
@@ -79,4 +77,6 @@ Build and run the docker image.
 
 From another shell, send a POST have the handler run.
 
-```$ curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_0.mp4"}}}]}'```
+```$ curl -XPOST "http://localhost:8080/2015-03-31/functions/function/invocations" -d '{"Records": [{"s3": {"object": {"key":"test_<number>.mp4"}}}]}'```
+
+Check the CSV result for the `test_<number>.mp4` file in the output bucket as an object with the name `test_<number>`.
