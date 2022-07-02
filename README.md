@@ -2,11 +2,35 @@
 
 ### 1. **Raj Kane**:
 
-  * Task
+  * Developed code to upload and download files from S3 input and output buckets.
+  
+  * Developed code to load and retrieve the student data to DynamoDB.
+  
+  * Edited the Dockerfile to include the S3 and DDB code modules.
+  
+  * Performed local container testing.
+  
+  * Developed the function handler code to frame and classify MP4 videos.
+  
+  * Wrote code to parse the S3 event trigger.
+  
+  * Wrote README documentation. 
+
 
 ### 2. **Trey Manuszak**:
 
-  * Task
+  * Setup of the S3 input and output buckets.
+  
+  * Managed the container hosting to ECR.
+  
+  * Management of the AWS Lambda creation from the container image.
+  
+  * Development of access permissions for the Lambda function.
+  
+  * Setup the trigger between the S3 input bucket and the Lambda function.
+  
+  * Performed production level testing and evaluation of Lambda function configuration.
+
 
 ## DynamoDB
 
